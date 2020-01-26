@@ -1,0 +1,4 @@
+.vscode
+scal
+*.dSYM
+.DS_Store
