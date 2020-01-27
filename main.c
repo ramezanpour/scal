@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <time.h>
+#include <string.h>
+#include <stdbool.h>
 #include "convertor.h"
 
 void draw_cal(int d, int m, int y)
@@ -43,10 +45,41 @@ void draw_cal(int d, int m, int y)
     }
     printf("\n");
 }
+
+bool has_flag(const char *flag, const char *argv[], int argc)
+{
+    for (int i = 1; i < argc; i++)
+    {
+        if (strcmp(argv[i], flag) == 0)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 int main(int argc, char const *argv[])
 {
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    draw_cal(tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
-    return 0;
+    if (argc == 1)
+    {
+        draw_cal(tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+        return 0;
+    }
+    else
+    {
+        if (has_flag("--simple", argv, argc))
+        {
+            // Return a simple date
+            date current_shami_date = gregorian_to_jalali(tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+            char *format = "%d-%02d-%02d";
+            printf(format,
+                   current_shami_date.year,
+                   current_shami_date.month,
+                   current_shami_date.day);
+            printf("\n");
+            return 0;
+        }
+    }
 }
