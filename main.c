@@ -104,7 +104,6 @@ int main(int argc, char const *argv[])
                    current_shami_date.month,
                    current_shami_date.day);
 
-            free(format);
             printf("\n");
             return 0;
         }
