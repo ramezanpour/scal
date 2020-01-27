@@ -2,6 +2,7 @@
 #include <time.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include "convertor.h"
 
 void draw_cal(int d, int m, int y)
@@ -51,11 +52,24 @@ bool has_flag(const char *flag, const char *argv[], int argc)
     for (int i = 1; i < argc; i++)
     {
         if (strcmp(argv[i], flag) == 0)
-        {
             return true;
-        }
     }
     return false;
+}
+
+const char *get_option_value(const char *option, const char *argv[], int argc)
+{
+    int option_index = 0;
+    for (int i = 1; i < argc; i++)
+    {
+        if (strcmp(argv[i], option) == 0)
+            option_index = i;
+    }
+
+    if (option_index == 0)
+        return "";
+    else
+        return (option_index + 1 > argc) ? "" : argv[option_index + 1];
 }
 
 int main(int argc, char const *argv[])
@@ -74,10 +88,21 @@ int main(int argc, char const *argv[])
             // Return a simple date
             date current_shami_date = gregorian_to_jalali(tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
             char *format = "%d-%02d-%02d";
+            if (has_flag("--format", argv, argc))
+            {
+                const char *custom_format = get_option_value("--format", argv, argc);
+                if (strcmp(custom_format, "") != 0)
+                {
+                    format = malloc(sizeof(char) * strlen(custom_format));
+                    strncpy(format, custom_format, strlen(custom_format));
+                }
+            }
             printf(format,
                    current_shami_date.year,
                    current_shami_date.month,
                    current_shami_date.day);
+
+            free(format);
             printf("\n");
             return 0;
         }

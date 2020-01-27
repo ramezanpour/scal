@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS = -I. -Wall
+CFLAGS = -I. -Wall -g
 
 all:
 	$(CC) convertor.c main.c $(CFLAGS) -o scal
