@@ -88,13 +88,15 @@ int main(int argc, char const *argv[])
             // Return a simple date
             date current_shami_date = gregorian_to_jalali(tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
             char *format = "%d-%02d-%02d";
+
+            // Support for custom format
             if (has_flag("--format", argv, argc))
             {
                 const char *custom_format = get_option_value("--format", argv, argc);
                 if (strcmp(custom_format, "") != 0)
                 {
                     format = malloc(sizeof(char) * strlen(custom_format));
-                    strncpy(format, custom_format, strlen(custom_format));
+                    strcpy(format, custom_format);
                 }
             }
             printf(format,
