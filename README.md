@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Scal is a very simple CLI-based Persian calendar that displays the current **Shamsi** month calendar and highlights the current date. The following is a screennshot:
+Scal is a very simple CLI-based Persian calendar that displays the current **Shamsi** month calendar and highlights the current date. The following is a screenshot:
 
 ![Scal Screenshot](https://user-images.githubusercontent.com/1416456/73172575-8f743680-4118-11ea-9159-33a65bfc2f71.png)
 
